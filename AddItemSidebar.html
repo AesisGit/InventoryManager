@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+      }
+      input, select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 15px;
+        background-color: #34a853;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Add New Item</h3>
+    <label for="category">Category:</label>
+    <select id="category"></select>
+
+    <label for="item">Item Name:</label>
+    <input type="text" id="item" placeholder="Enter item name">
+
+    <label for="holdingStock">Holding Stock:</label>
+    <input type="number" id="holdingStock" placeholder="0">
+
+    <label for="current">Current:</label>
+    <input type="number" id="current" placeholder="0">
+
+    <label for="need">Need:</label>
+    <input type="number" id="need" placeholder="0">
+
+    <button onclick="submit()">Add Item</button>
+    <div id="status" style="margin-top:10px;color:green;"></div>
+
+    <script>
+      function loadCategories() {
+        google.script.run.withSuccessHandler(function(categories) {
+          const select = document.getElementById("category");
+          categories.forEach(cat => {
+            const option = document.createElement("option");
+            option.value = cat;
+            option.text = cat;
+            select.appendChild(option);
+          });
+        }).getCategories();
+      }
+
+      function submit() {
+        const data = {
+          category: document.getElementById("category").value,
+          item: document.getElementById("item").value,
+          holdingStock: parseFloat(document.getElementById("holdingStock").value) || 0,
+          current: parseFloat(document.getElementById("current").value) || 0,
+          need: parseFloat(document.getElementById("need").value) || 0
+        };
+
+        google.script.run.withSuccessHandler(function(response) {
+          document.getElementById("status").innerText = response;
+          document.getElementById("item").value = "";
+          document.getElementById("holdingStock").value = "";
+          document.getElementById("current").value = "";
+          document.getElementById("need").value = "";
+        }).addItemToSheet(data);
+      }
+
+      loadCategories();
+    </script>
+  </body>
+</html>
