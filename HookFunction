@@ -1,0 +1,5 @@
+function showDashboardSidebar() {
+  const html = HtmlService.createHtmlOutputFromFile("Dashboard")
+    .setTitle("Inventory Dashboard");
+  SpreadsheetApp.getUi().showSidebar(html);
+}
