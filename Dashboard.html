@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        font-size: 14px;
+        background-color: #4285f4;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #3367d6;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>📋 Inventory Dashboard</h2>
+    <button onclick="openAddItemSidebar()">➕ Add New Item</button>
+    <button onclick="startStocktake()">📅 Create Stocktake Sheet</button>
+    <button onclick="uploadScannerData()">📷 Upload Scanner Data</button>
+    <button onclick="countReferences()">🔢 Count Unique References</button>
+
+    <script>
+      function openAddItemSidebar() {
+        google.script.run.showAddItemSidebar();
+      }
+      function startStocktake() {
+        google.script.run.duplicateInventorySheet();
+      }
+      function uploadScannerData() {
+        google.script.run.showStartupPopup();
+      }
+      function countReferences() {
+        google.script.run.countUniqueReferences();
+      }
+    </script>
+  </body>
+</html>
